@@ -1,0 +1,75 @@
+<html>
+<head>
+<style>
+.LayeredCanvas{
+	position:absolute;
+	left:0px;
+	top:0px;
+}
+#bottomCanvas{
+	z-index:0;
+}
+#middleCanvas{
+	z-index:1;
+}
+#topCanvas{
+	z-index:2;
+}
+.Output {
+	position:absolute;
+	left:10px;
+	top:200px;
+	width: 980px;
+  height: 100px;
+}
+</style>
+</head>
+<body>
+	<canvas id="bottomCanvas" class="LayeredCanvas"></canvas>
+	<canvas id="middleCanvas" class="LayeredCanvas"></canvas>
+	<canvas id="topCanvas" class="LayeredCanvas"></canvas>
+
+	<textarea id="output" class="Output"></textarea>
+
+<script src="js/strat.js"></script>
+<script src="js/pixelguitar.js"></script>
+<script src="js/quiz.js"></script>
+<script>
+	guitar.setSpecs(guitarSpecs);
+	window.addEventListener("resize", resize);
+
+	function resize() {
+		var topCanvas = document.getElementById("topCanvas");
+		var middleCanvas = document.getElementById("middleCanvas");
+		var bottomCanvas = document.getElementById("bottomCanvas");
+
+		topCanvas.width = window.innerWidth;
+		topCanvas.height = window.innerHeight / 2;
+		middleCanvas.width = window.innerWidth;
+		middleCanvas.height = window.innerHeight / 2;
+		bottomCanvas.width = window.innerWidth;
+		bottomCanvas.height = window.innerHeight / 2;
+
+		output.style.width = (window.innerWidth - 20) + "px";
+		output.style.top = (window.innerHeight / 2) + "px";
+
+		guitar.updateSize();
+		guitar.drawStructure();
+		guitar.drawStrings([]);
+	}
+	resize();
+
+	quiz.newQuery();
+
+	topCanvas.addEventListener('click', (event) => {
+		if(quiz.checkAnswer(event.clientX, event.clientY,guitar)) {
+			window.setTimeout(function() {
+				quiz.newQuery();
+			}, 1000);
+		}
+	});
+</script>
+
+
+</body>
+</html>
