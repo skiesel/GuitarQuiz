@@ -61,6 +61,14 @@
 
 	quiz.newQuery();
 
+	topCanvas.addEventListener("touchend", (touch) => {
+		if(quiz.checkAnswer(touch.clientX, touch.clientY,guitar)) {
+			window.setTimeout(function() {
+				quiz.newQuery();
+			}, 1000);
+		}
+	});
+
 	topCanvas.addEventListener('click', (event) => {
 		if(quiz.checkAnswer(event.clientX, event.clientY,guitar)) {
 			window.setTimeout(function() {
