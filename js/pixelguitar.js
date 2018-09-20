@@ -126,20 +126,44 @@ var guitar = {
 		var middleCanvas = document.getElementById("middleCanvas");
 		var middleCtx = middleCanvas.getContext("2d");
 
-			middleCtx.clearRect(0,0,middleCanvas.width,middleCanvas.height);
-			for(var i = 0; i < this.stringXs.length; i++) {
-				if(disabledStrings.indexOf(strings[i]) < 0) {
-					middleCtx.strokeStyle = "#000000";
-					middleCtx.lineWidth = "2";
-				} else {
-					middleCtx.strokeStyle = "#C0C0C0";
-					middleCtx.lineWidth = "1";
-				}
-
-				middleCtx.beginPath();
-				middleCtx.moveTo(this.stringXs[i][0], this.stringYs[i]);
-				middleCtx.lineTo(this.stringXs[i][1], this.stringYs[i]);
-				middleCtx.stroke();
+		middleCtx.clearRect(0,0,middleCanvas.width,middleCanvas.height);
+		for(var i = 0; i < this.stringXs.length; i++) {
+			if(disabledStrings.indexOf(strings[i]) < 0) {
+				middleCtx.strokeStyle = "#000000";
+				middleCtx.lineWidth = "2";
+			} else {
+				middleCtx.strokeStyle = "#C0C0C0";
+				middleCtx.lineWidth = "1";
 			}
+
+			middleCtx.beginPath();
+			middleCtx.moveTo(this.stringXs[i][0], this.stringYs[i]);
+			middleCtx.lineTo(this.stringXs[i][1], this.stringYs[i]);
+			middleCtx.stroke();
 		}
+	},
+
+  drawBlockedFrets : function(disabledFrets) {
+		var middleCanvas = document.getElementById("middleCanvas");
+		var middleCtx = middleCanvas.getContext("2d");
+
+		middleCtx.fillStyle = "rgba(192, 192, 192, 0.75)";
+
+		for(var i = 0; i < disabledFrets.length; i++) {
+			var fret = disabledFrets[i];
+			var previousFret = fret - 1;
+			var nextFret = fret + 1;
+
+			var startX = (this.fretXs[nextFret] + this.fretXs[fret]) / 2;
+
+			var endX;
+			if(fret == 0) {
+				endX = this.fretXs[0] + (this.fretXs[0] - (this.fretXs[0] + this.fretXs[1]) / 2);
+			} else {
+				endX = (this.fretXs[previousFret] + this.fretXs[fret]) / 2;
+			}
+
+			middleCtx.fillRect(startX, this.fingerboardStartY, (endX - startX), this.fingerboardWidth);
+		}
+	}
 };

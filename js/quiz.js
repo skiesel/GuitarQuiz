@@ -1,6 +1,7 @@
 var quiz = {
 	searchingForToneText : "",
-	disabledStrings :[],
+	disabledStrings : [],
+	disabledFrets : [],
 	searchingForTone : -1,
 	streak : 0,
 
@@ -15,15 +16,28 @@ var quiz = {
 		this.searchingForTone = Math.floor(Math.random() * chromatic.length);
 		var tone = chromatic[this.searchingForTone];
 		this.searchingForToneText = tone[Math.floor(Math.random() * tone.length)];
-		output.innerHTML = "Find the note " + this.searchingForToneText + " without using the grayed out strings.";
-		var nDisabled = Math.floor(Math.random() * 5);
+		output.innerHTML = "Find the note " + this.searchingForToneText + " without using the grayed out frets or strings.";
 
-		this.disabledStrings = strings.slice();
-		for(var i = 0; i < 6 - nDisabled; i++) {
-			this.disabledStrings.splice(Math.floor(Math.random() * this.disabledStrings.length), 1);
+		this.disabledStrings = [];
+		this.disabledFrets = [];
+
+		if(Math.random() < 0.5) {
+			var nDisabled = Math.floor(Math.random() * 5);
+
+			this.disabledStrings = strings.slice();
+			for(var i = 0; i < 6 - nDisabled; i++) {
+				this.disabledStrings.splice(Math.floor(Math.random() * this.disabledStrings.length), 1);
+			}
+		} else {
+			var nDisabled = Math.floor(Math.random() * 8);
+			for(var i = 0; i < nDisabled; i++) {
+				this.disabledFrets.push(i);
+				this.disabledFrets.push(i + 12);
+			}
 		}
 
 		guitar.drawStrings(this.disabledStrings);
+		guitar.drawBlockedFrets(this.disabledFrets);
 	},
 
 	checkAnswer : function(x,y,guitar) {
@@ -64,6 +78,10 @@ var quiz = {
 						nearestFretDistance = dist;
 						nearestFret = i + 1;
 					}
+				}
+
+				if(this.disabledFrets.indexOf(nearestFret) >= 0) {
+					return;
 				}
 
 				if(!document.getElementById("muted").checked) {

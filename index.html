@@ -64,7 +64,8 @@
 
 		guitar.updateSize();
 		guitar.drawStructure();
-		guitar.drawStrings([]);
+		guitar.drawStrings(quiz.disabledStrings);
+		guitar.drawBlockedFrets(quiz.disabledFrets);
 	}
 	resize();
 
@@ -79,7 +80,6 @@
 	});
 
 	topCanvas.addEventListener('click', (event) => {
-		console.log(event);
 		if(quiz.checkAnswer(event.clientX, event.clientY,guitar)) {
 			window.setTimeout(function() {
 				quiz.newQuery();
