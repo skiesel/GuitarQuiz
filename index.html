@@ -33,6 +33,7 @@
 	<canvas id="topCanvas" class="LayeredCanvas"></canvas>
 
 	<div id="controls">
+		<div><input type="checkbox" id="lefty"/> lefty</div>
 		<div><input type="checkbox" checked id="muted"/> mute</div>
 		<div><span id="streak">0</span> note streak</div>
 		<div id="output"></div>
@@ -43,14 +44,29 @@
 <script src="js/quiz.js"></script>
 <script src="js/tones.js"></script>
 <script>
+	var topCanvas = document.getElementById("topCanvas");
+	var middleCanvas = document.getElementById("middleCanvas");
+	var bottomCanvas = document.getElementById("bottomCanvas");
+
+	var topCtx = topCanvas.getContext("2d");
+	var middleCtx = middleCanvas.getContext("2d");
+	var bottomCtx = bottomCanvas.getContext("2d");
+
+	var controls = document.getElementById("controls");
+
 	guitar.setSpecs(guitarSpecs);
+
 	window.addEventListener("resize", resize);
+	document.getElementById("lefty").addEventListener('change', resize);
 
 	function resize() {
 		var topCanvas = document.getElementById("topCanvas");
 		var middleCanvas = document.getElementById("middleCanvas");
 		var bottomCanvas = document.getElementById("bottomCanvas");
-		var controls = document.getElementById("controls");
+
+		var topCtx = topCanvas.getContext("2d");
+		var middleCtx = middleCanvas.getContext("2d");
+		var bottomCtx = bottomCanvas.getContext("2d");
 
 		topCanvas.width = window.innerWidth;
 		topCanvas.height = window.innerHeight / 2;
@@ -58,6 +74,12 @@
 		middleCanvas.height = window.innerHeight / 2;
 		bottomCanvas.width = window.innerWidth;
 		bottomCanvas.height = window.innerHeight / 2;
+
+		if(document.getElementById("lefty").checked) {
+			topCtx.transform(-1, 0, 0, 1, topCanvas.width, 0)
+			middleCtx.transform(-1, 0, 0, 1, middleCanvas.width, 0)
+			bottomCtx.transform(-1, 0, 0, 1, bottomCanvas.width, 0)
+		}
 
 		controls.style.width = (window.innerWidth - 20) + "px";
 		controls.style.top = (window.innerHeight / 2) + "px";
