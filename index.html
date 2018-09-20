@@ -31,7 +31,8 @@
 	<canvas id="topCanvas" class="LayeredCanvas"></canvas>
 
 	<div id="controls">
-		<input type="checkbox" checked id="muted"/> mute
+		<div><input type="checkbox" checked id="muted"/> mute</div>
+		<div><span id="streak">0</span> note streak</div>
 		<textarea id="output" class="Output"></textarea>
 	</div>
 
@@ -76,6 +77,7 @@
 	});
 
 	topCanvas.addEventListener('click', (event) => {
+		console.log(event);
 		if(quiz.checkAnswer(event.clientX, event.clientY,guitar)) {
 			window.setTimeout(function() {
 				quiz.newQuery();

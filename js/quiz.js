@@ -2,6 +2,7 @@ var quiz = {
 	searchingForToneText : "",
 	disabledStrings :[],
 	searchingForTone : -1,
+	streak : 0,
 
 	newQuery : function() {
 		var topCanvas = document.getElementById("topCanvas");
@@ -86,9 +87,13 @@ var quiz = {
 
 				if(this.searchingForTone == toneIndex) {
 					output.innerHTML = "Great Job!";
+					this.streak++;
+					document.getElementById("streak").innerHTML = this.streak;
 					return true;
 				} else {
 					output.innerHTML = "Oops, you selected the note " + chromatic[toneIndex] + ". Give it another try! Find the note " + this.searchingForToneText;
+					this.streak = 0;
+					document.getElementById("streak").innerHTML = this.streak;
 					return false;
 				}
 	}
