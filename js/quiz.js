@@ -23,8 +23,6 @@ var quiz = {
 		}
 
 		guitar.drawStrings(this.disabledStrings);
-
-		console.log("newQuery " + this.searchingForToneText);
 	},
 
 	checkAnswer : function(x,y,guitar) {
@@ -66,6 +64,8 @@ var quiz = {
 						nearestFret = i + 1;
 					}
 				}
+
+				tones.playNote(nearestString, nearestFret);
 
 				var topCanvas = document.getElementById("topCanvas");
 				var topCtx = topCanvas.getContext("2d");

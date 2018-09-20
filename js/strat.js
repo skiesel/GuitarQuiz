@@ -23,6 +23,15 @@ var guitarSpecs = {
 var strings = ["E", "A", "D", "G", "B", "e"];
 var stringToChromatic = [7, 0, 5, 10, 2, 7];
 
+//E2 A2 D3 G3 B3 E4
+var stringsToConcertA = [
+	-2 * 12 - 5,
+	-2 * 12 - 0,
+	-1 * 12 - 7,
+	-1 * 12 - 2,
+	-1 * 12 + 2,
+	 0 * 12 - 5]
+
 var chromatic = [
 	["A"],
 	["A#", "Bb"],
