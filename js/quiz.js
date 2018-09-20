@@ -65,7 +65,9 @@ var quiz = {
 					}
 				}
 
-				tones.playNote(nearestString, nearestFret);
+				if(!document.getElementById("muted").checked) {
+					tones.playNote(nearestString, nearestFret);
+				}
 
 				var topCanvas = document.getElementById("topCanvas");
 				var topCtx = topCanvas.getContext("2d");
