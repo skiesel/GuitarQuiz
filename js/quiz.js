@@ -45,6 +45,13 @@ var quiz = {
 				return;
 			}
 
+			var topCanvas = document.getElementById("topCanvas");
+			var topCtx = topCanvas.getContext("2d");
+			
+			if(document.getElementById("lefty").checked) {
+				x = topCanvas.width - x;
+			}
+
 			if(x < guitar.fingerboardStartX
 				// || x > guitar.fingerboardEndX
 				|| y < guitar.fingerboardStartY
@@ -87,9 +94,6 @@ var quiz = {
 				if(!document.getElementById("muted").checked) {
 					tones.playNote(nearestString, nearestFret);
 				}
-
-				var topCanvas = document.getElementById("topCanvas");
-				var topCtx = topCanvas.getContext("2d");
 
 				topCtx.clearRect(0, 0, topCanvas.width, topCanvas.height);
 

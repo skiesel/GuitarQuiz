@@ -5,6 +5,7 @@ var guitar = {
 	},
 
 	updateSize : function() {
+		var bottomCanvas = document.getElementById("bottomCanvas");
 		this.fullGuitarLength = bottomCanvas.width - 2;
 
 		this.resizeRatio = this.fullGuitarLength / this.specs.fullGuitarLengthMM;
